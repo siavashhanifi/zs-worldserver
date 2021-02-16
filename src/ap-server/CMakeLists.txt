@@ -24,3 +24,5 @@ add_executable (${PROJECT_NAME} "main.cpp"
  "data/UDPAddress.h"
  "data/FirstPayload.h"
  "data/AddClientPayload.h")
+ 
+ target_link_libraries(${PROJECT_NAME} pthread)
