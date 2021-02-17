@@ -11,7 +11,7 @@ namespace zs_worldserver {
 		static ActivePlayers* getInstance();
                 int addClient(int tcpSocket);
             private:
-                static ActivePlayers* singleton;
+                static ActivePlayers* singletonAP;
                 std::mutex lock;
                 int idCounter;
                 std::map<int,int> idSockMap;

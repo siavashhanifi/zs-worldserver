@@ -1,12 +1,12 @@
 #include"ActivePlayers.h"
 
-zs_worldserver::ActivePlayers *zs_worldserver::ActivePlayers::singleton = NULL;
+zs_worldserver::ActivePlayers *zs_worldserver::ActivePlayers::singletonAP = NULL;
 
 //Read about the singleton pattern to understand this better.
 zs_worldserver::ActivePlayers * zs_worldserver::ActivePlayers::getInstance(){
-    if (singleton == NULL)
-        singleton = new ActivePlayers();
-    return singleton;
+    if (singletonAP == NULL)
+        singletonAP = new ActivePlayers();
+    return singletonAP;
 }
 
 zs_worldserver::ActivePlayers::ActivePlayers(){
