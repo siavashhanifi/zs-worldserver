@@ -1,27 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+#pragma once
+#include <unordered_map>
+#include<mutex>
+#include "../../common/data/Zone.h"
 
-/* 
- * File:   Zones.h
- * Author: siavash
- *
- * Created on February 20, 2021, 2:15 PM
- */
-
-#ifndef ZONES_H
-#define ZONES_H
-
-class Zones {
-public:
-    Zones();
-    Zones(const Zones& orig);
-    virtual ~Zones();
-private:
-
-};
-
-#endif /* ZONES_H */
-
+namespace zs_worldserver{
+    class Zones {
+    public:
+        static Zones* zonesSingleton;
+        static Zones* getInstance();
+        void addZone(Zone zone);
+    private:
+        Zones();
+        std::mutex lock;
+        std::unordered_map<int, Zone> idZone;
+    };
+}
