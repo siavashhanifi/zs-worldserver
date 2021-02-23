@@ -5,6 +5,8 @@ project("cp-server")
 add_executable (${PROJECT_NAME} 
     "main.cpp"
     "main.h"
+    "controller/Controller.cpp"
+    "controller/Controller.h"
     "network/ConnectionHandler.cpp"
     "network/ConnectionHandler.h"
     "network/TCPListener.cpp"
@@ -13,4 +15,4 @@ add_executable (${PROJECT_NAME}
     "model/Zones.h"
  )
  
- target_link_libraries(${PROJECT_NAME} pthread)
+ target_link_libraries(${PROJECT_NAME} Common pthread)

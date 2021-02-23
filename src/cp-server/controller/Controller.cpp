@@ -1,24 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   Controller.cpp
- * Author: siavash
- * 
- * Created on February 20, 2021, 2:13 PM
- */
-
 #include "Controller.h"
 
-Controller::Controller() {
+zs_worldserver::Controller* zs_worldserver::Controller::controller = NULL;
+
+zs_worldserver::Controller *zs_worldserver::Controller::getInstance(){
+    if(controller == NULL)
+        controller = new Controller();
+    return controller;
 }
 
-Controller::Controller(const Controller& orig) {
+zs_worldserver::Controller::Controller(){
+    zones = zones->getInstance();
 }
 
-Controller::~Controller() {
+void zs_worldserver::Controller::addZone(Zone zone){
+    zones->addZone(zone);
 }
-

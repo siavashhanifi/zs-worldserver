@@ -4,9 +4,9 @@
 
 namespace zs_worldserver{
     struct Zone {
+        int id;
         std::string ip;
         int udpPort;
-        int id;
         Border border;
     };
 }

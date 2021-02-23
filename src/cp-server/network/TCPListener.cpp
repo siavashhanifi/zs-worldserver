@@ -1,9 +1,4 @@
-#include <stdexcept>
-#include <sys/types.h> 
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include "TCPListener.h"
-#include "ConnectionHandler.h"
 
 zs_worldserver::TCPListener::TCPListener(int port){
     this->port = port;
@@ -31,13 +26,17 @@ void zs_worldserver::TCPListener::bindSocket(){
 }
 
 void zs_worldserver::TCPListener::socketListen(){
-    listen(listenerSocket, 5);
+    listen(listenerSocket, 5); 
+    sockaddr_in clientAddress;
+    socklen_t clilen = sizeof(clientAddress);
     while(true){
-        sockaddr_in clientAddress;
         int connection = accept(listenerSocket, (sockaddr*)&clientAddress, 
-                (socklen_t*)sizeof(clientAddress));
-        std::thread newThread(&connectionThread, &connection);
-        newThread.detach();
+                &clilen);
+        std::cout << "New connection: " << connection << std::endl;
+        if(connection >= 0){
+            std::thread newThread(&connectionThread, &connection);
+            newThread.detach();
+        }
     }
 }
 
