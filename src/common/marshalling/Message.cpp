@@ -34,7 +34,7 @@ zs_worldserver::Message::Message(Head head, Zone zone){
 zs_worldserver::Message::Message(Head head, Status status){
     this->head = head;
     this->status = status;
-    this->bytes = new char[sizeof(head) + sizeof(status)];
+    this->bytes = new char[sizeof(head) + sizeof(status) + 1];// + 1('\0')
     serializeHead();
     serializeStatus();//STATUS
     size = strlen(bytes) + 1; 

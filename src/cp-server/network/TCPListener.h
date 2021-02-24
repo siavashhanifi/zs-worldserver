@@ -1,8 +1,8 @@
 #pragma once
 
-#include<sys/socket.h>
-#include<thread>
+#include <thread>
 #include <stdexcept>
+#include <sys/socket.h>
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <netinet/in.h>

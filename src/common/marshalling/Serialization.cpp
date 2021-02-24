@@ -10,6 +10,7 @@ void zs_worldserver::Message::dserializeHead(){
 
 void zs_worldserver::Message::serializeStatus(){
     bytes[1] = (char)status;
+    bytes[2] = '\0';
     //std::memcpy(bytes + sizeof(head), &status, sizeof(status));
 }
 

@@ -8,17 +8,21 @@ zs_worldserver::ConnectionHandler::ConnectionHandler(int tcpConnection){
 }
 
 zs_worldserver::ConnectionHandler::~ConnectionHandler(){
-    // close(tcpConnection);
+    close(tcpConnection);
 }
 
 void zs_worldserver::ConnectionHandler::readNext(){
+    int n = 0;
     while(true){
-        int n = read(tcpConnection, bytes, MSG_MAX_BYTES);
+        n += read(tcpConnection, bytes, MSG_MAX_BYTES);
         if(n  == -1 &&  EBADF)
             break; 
+        else if(n < MSG_MAX_BYTES)
+            continue;
         msg = new Message(bytes);
         handleMessage();
         delete msg;
+        n = 0;
     }
 }
 
@@ -41,5 +45,5 @@ void zs_worldserver::ConnectionHandler::handleMessage(){
 
 void zs_worldserver::ConnectionHandler::sendReply(){
     char *bytes = reply->bytes;
-    send(tcpConnection, bytes, strlen(bytes)+ 1, 0);
+    send(tcpConnection, bytes, MSG_MAX_BYTES, 0);
 }
