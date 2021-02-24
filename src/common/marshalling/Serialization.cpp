@@ -1,19 +1,21 @@
 #include "Message.h"
 
 void zs_worldserver::Message::serializeHead(){
-    std::memcpy(bytes, &head, sizeof(head));
+    bytes[0] = (char)head;
 }
 
 void zs_worldserver::Message::dserializeHead(){
-    std::memcpy(&head, bytes, sizeof(head));
+    head = (Head)bytes[0];
 }
 
 void zs_worldserver::Message::serializeStatus(){
-    std::memcpy(bytes + sizeof(head), &status, sizeof(status));
+    bytes[1] = (char)status;
+    //std::memcpy(bytes + sizeof(head), &status, sizeof(status));
 }
 
 void zs_worldserver::Message::dserializeStatus(){
-    std::memcpy(&status, bytes + sizeof(head), sizeof(status));
+    //std::memcpy(&status, bytes + sizeof(head), sizeof(status));
+    status = (Status)bytes[1];
 }
 
 void zs_worldserver::Message::serializeZone(){    
@@ -50,7 +52,7 @@ void zs_worldserver::Message::dserializeZone(){
     zone.border.xMax = stoi(result.at(3));
     zone.border.xMin = stoi(result.at(4));
     zone.border.yMax = stoi(result.at(5));
-    zone.border.xMin = stoi(result.at(6));
+    zone.border.yMin = stoi(result.at(6));
     zone.border.zMax = stoi(result.at(7));
     zone.border.zMin = stoi(result.at(8));
 }

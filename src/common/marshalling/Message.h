@@ -1,9 +1,11 @@
 #pragma once
+
 #include <cstring>
-#include <string>
-#include<sstream>
-#include<vector>
+#include <sstream>
+#include <vector>
 #include <iostream>
+#include <string>
+#include <memory>
 #include "../data/Zone.h"
 #include "../data/Border.h"
 
@@ -24,6 +26,7 @@ namespace zs_worldserver{
     class Message{
     public:
         char* bytes;
+        int size;
         Message(char *bytes);
         Message(Head, Zone);
         Message(Head, Status);
