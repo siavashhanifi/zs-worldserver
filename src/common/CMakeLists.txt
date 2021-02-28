@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.8)
 
-add_library(Common SHARED
+add_library(common
     "data/Zone.h"
     "data/Border.h"
     "marshalling/Message.h"
@@ -8,4 +8,4 @@ add_library(Common SHARED
     "marshalling/Serialization.cpp"
  )
 
-target_include_directories (Common PUBLIC .)
+target_include_directories (common PUBLIC .)

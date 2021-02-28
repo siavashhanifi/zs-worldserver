@@ -7,4 +7,4 @@ add_executable(${PROJECT_NAME}
     "network/CPSCommunicator.h"
 )
 
-target_link_libraries(${PROJECT_NAME} Common)
+target_link_libraries(${PROJECT_NAME} common)

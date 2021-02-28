@@ -15,4 +15,4 @@ add_executable (${PROJECT_NAME}
     "model/Zones.h"
  )
  
- target_link_libraries(${PROJECT_NAME} Common pthread)
+ target_link_libraries(${PROJECT_NAME} common pthread)
