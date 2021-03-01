@@ -7,11 +7,18 @@ if(UNIX AND NOT APPLE)
 	set(LINUX TRUE)
 endif()
 
+# code used across client, 
+# zone-server and cp-server
 add_subdirectory(common)
 
 # client is targeted for windows
 if(WIN32)
+	
+	# find GLEW includes and libs
+	find_package(GLEW REQUIRED)
+
 	add_subdirectory(client)
+
 endif(WIN32)
 
 # servers are targeted for linux
