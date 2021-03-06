@@ -2,6 +2,7 @@ cmake_minimum_required (VERSION 3.8)
 
 project("zs-worldsrv")
 
+
 # define linux
 if(UNIX AND NOT APPLE)
 	set(LINUX TRUE)
@@ -13,10 +14,10 @@ add_subdirectory(common)
 
 # client is targeted for windows
 if(WIN32)
-	
-	# find GLEW includes and libs
-	find_package(GLEW REQUIRED)
-
+	# find OpenGL includes and libs
+	find_package(GLEW MODULE)
+	find_package(glfw3 CONFIG)
+	find_package(glm CONFIG)
 	add_subdirectory(client)
 
 endif(WIN32)

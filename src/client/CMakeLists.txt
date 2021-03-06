@@ -5,4 +5,4 @@ add_executable(${PROJECT_NAME}
 "main.h"
 )
 
-target_link_libraries(${PROJECT_NAME} common GLEW::GLEW)
+target_link_libraries(${PROJECT_NAME} common GLEW::GLEW glfw glm::glm)
