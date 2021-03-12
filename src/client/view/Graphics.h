@@ -10,6 +10,8 @@ namespace zs_worldserver {
 	public:
 		Graphics();
 	private:
+		static GLfloat posX;
+		static GLfloat posY;
 		GLFWwindow* window;
 		static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 		static void error_callback(int error, const char* description);

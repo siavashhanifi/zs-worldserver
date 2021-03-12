@@ -33,7 +33,7 @@ void zs_worldserver::Message::serializeZone(){
     zoneString += to_string(zone.border.zMin) + ':';
         
     //[head,<bytes>-->zone]
-    std::memcpy((bytes + sizeof(head)), zoneString.c_str(), zoneString.length()+ 1);
+    std::memcpy((bytes + sizeof(head)), zoneString.c_str(), zoneString.length() + 1);
 }
 
 void zs_worldserver::Message::dserializeZone(){
@@ -58,3 +58,11 @@ void zs_worldserver::Message::dserializeZone(){
     zone.border.zMin = stoi(result.at(8));
 }
 
+void zs_worldserver::Message::serializeName() {
+    char* cstr = bytes + sizeof(head);
+    std::memcpy(cstr, playerName.c_str(), playerName.length() + 1);
+}
+
+void zs_worldserver::Message::dserializeName() {
+    playerName = std::string((char*)(bytes + sizeof(head)));
+}

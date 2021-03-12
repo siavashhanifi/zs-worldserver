@@ -11,9 +11,14 @@ zs_worldserver::Message::Message(char* bytes){
             dserializeZone();
             break;
         }
-        case Head::ZCP_ADDZONE_RES:
+        case Head::CPZ_ADDZONE_RES:
         {
             dserializeStatus();
+            break;
+        }
+        case Head::CCP_ADDCLIENT_REQ:
+        {
+            dserializeName();
             break;
         }
         default:
@@ -40,14 +45,30 @@ zs_worldserver::Message::Message(Head head, Status status){
     size = strlen(bytes) + 1; 
 }
 
+zs_worldserver::Message::Message(Head head, std::string playerName) {
+    if (playerName.length() > MAX_NAME_LEN)
+        throw std::runtime_error("playerName too long");
+
+    this->head = head;
+    this->playerName = playerName;
+    this->bytes = new char[sizeof(head) + playerName.length() + 1];
+    serializeHead();
+    serializeName();
+    size = strlen(bytes) + 1;
+}
+
+zs_worldserver::Head zs_worldserver::Message::getHead() {
+    return head;
+}
+
+zs_worldserver::Status zs_worldserver::Message::getStatus() {
+    return status;
+}
+
 zs_worldserver::Zone zs_worldserver::Message::getZone(){
     return zone;
 }
 
-zs_worldserver::Head zs_worldserver::Message::getHead(){
-    return head;
-}
-
-zs_worldserver::Status zs_worldserver::Message::getStatus(){
-    return status;
+std::string zs_worldserver::Message::getPlayerName() {
+    return playerName;
 }

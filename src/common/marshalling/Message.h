@@ -13,7 +13,11 @@ namespace zs_worldserver{
     
     enum class Head : char {
         ZCP_ADDZONE_REQ = 'a',
-        ZCP_ADDZONE_RES = 'b'
+        CPZ_ADDZONE_RES = 'b',
+        CCP_ADDCLIENT_REQ = 'c',
+        CPZ_ADDCLIENT_REQ = 'd',
+        ZCP_ADDCLIENT_RES = 'e',
+        CPC_ADDCLIENT_RES = 'f'
     };
     
     enum class Status : char {
@@ -21,7 +25,8 @@ namespace zs_worldserver{
         FAILED = 'y'
     };
 
-    const int MSG_MAX_BYTES = sizeof(Head) + sizeof(Zone);    
+    const int MSG_MAX_BYTES = sizeof(Head) + sizeof(Zone); 
+    const int MAX_NAME_LEN = 8;
     
     class Message{
     public:
@@ -30,21 +35,26 @@ namespace zs_worldserver{
         Message(char *bytes);
         Message(Head, Zone);
         Message(Head, Status);
+        Message(Head, std::string);
         Head getHead();
         Zone getZone();
         Status getStatus();
+        std::string getPlayerName();
     private:
         Head head;
         Zone zone;
         Status status;
+        std::string playerName;
        
         /*serialization functions*/
         void serializeHead();
         void serializeZone();
         void serializeStatus();
+        void serializeName();
         void dserializeHead();
         void dserializeZone();
         void dserializeStatus();
+        void dserializeName();
         
     };
 }
