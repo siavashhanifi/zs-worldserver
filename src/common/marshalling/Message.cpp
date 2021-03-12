@@ -21,6 +21,11 @@ zs_worldserver::Message::Message(char* bytes){
             dserializeName();
             break;
         }
+        case Head::CPZ_ADDCLIENT_REQ:
+        {
+            dserializePlayerState();
+            break;
+        }
         default:
             break;
     }
@@ -57,6 +62,15 @@ zs_worldserver::Message::Message(Head head, std::string playerName) {
     size = strlen(bytes) + 1;
 }
 
+zs_worldserver::Message::Message(Head head, PlayerState playerState) {
+    this->head = head;
+    this->playerState = playerState;
+    this->bytes = new char[sizeof(head) + sizeof(PlayerState)];
+    serializeHead();
+    serializePlayerState();
+    size = strlen(bytes) + 1;
+}
+
 zs_worldserver::Head zs_worldserver::Message::getHead() {
     return head;
 }
@@ -71,4 +85,8 @@ zs_worldserver::Zone zs_worldserver::Message::getZone(){
 
 std::string zs_worldserver::Message::getPlayerName() {
     return playerName;
+}
+
+zs_worldserver::PlayerState zs_worldserver::Message::getPlayerState() {
+    return playerState;
 }

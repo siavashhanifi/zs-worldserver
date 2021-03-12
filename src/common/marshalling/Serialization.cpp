@@ -66,3 +66,30 @@ void zs_worldserver::Message::serializeName() {
 void zs_worldserver::Message::dserializeName() {
     playerName = std::string((char*)(bytes + sizeof(head)));
 }
+
+void zs_worldserver::Message::serializePlayerState() {
+    std::string playerStateStr("");
+    using std::to_string;
+    playerStateStr += to_string(playerState.id) + ':';
+    playerStateStr += to_string(playerState.pos.x) + ':';
+    playerStateStr += to_string(playerState.pos.y) + ':';
+
+    //[head,<bytes>-->zone]
+    std::memcpy((bytes + sizeof(head)), playerStateStr.c_str(), playerStateStr.length() + 1);
+}
+
+void zs_worldserver::Message::dserializePlayerState() {
+    std::string serialized((char*)(bytes + sizeof(head)));
+    std::vector<std::string> result;
+    std::stringstream ss(serialized);
+    std::string item;
+    char delim = ':';
+
+    while (getline(ss, item, delim)) {
+        result.push_back(item);
+    }
+
+    playerState.id = stoi(result.at(0));
+    playerState.pos.x = stoi(result.at(1));
+    playerState.pos.y = stoi(result.at(2));
+}

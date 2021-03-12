@@ -8,6 +8,8 @@
 #include <memory>
 #include "../data/Zone.h"
 #include "../data/Border.h"
+#include "../data/Position.h"
+#include "../data/PlayerState.h"
 
 namespace zs_worldserver{
     
@@ -36,25 +38,32 @@ namespace zs_worldserver{
         Message(Head, Zone);
         Message(Head, Status);
         Message(Head, std::string);
+        Message(Head, PlayerState);
         Head getHead();
         Zone getZone();
         Status getStatus();
         std::string getPlayerName();
+        PlayerState getPlayerState();
+
     private:
         Head head;
         Zone zone;
         Status status;
         std::string playerName;
+        PlayerState playerState;
        
         /*serialization functions*/
         void serializeHead();
         void serializeZone();
         void serializeStatus();
         void serializeName();
+        void serializePlayerState();
+
         void dserializeHead();
         void dserializeZone();
         void dserializeStatus();
         void dserializeName();
+        void dserializePlayerState();
         
     };
 }
