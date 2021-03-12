@@ -18,4 +18,4 @@ add_executable(${PROJECT_NAME}
 "model/Game.cpp"
 )
 
-target_link_libraries(${PROJECT_NAME} common GLEW::GLEW glfw glm::glm opengl32.lib glu32.lib)
+target_link_libraries(${PROJECT_NAME} common GLEW::GLEW glfw glm::glm opengl32.lib glu32.lib ws2_32.lib)

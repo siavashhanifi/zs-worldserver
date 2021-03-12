@@ -90,6 +90,6 @@ void zs_worldserver::Message::dserializePlayerState() {
     }
 
     playerState.id = stoi(result.at(0));
-    playerState.pos.x = stoi(result.at(1));
-    playerState.pos.y = stoi(result.at(2));
+    playerState.pos.x = stof(result.at(1));
+    playerState.pos.y = stof(result.at(2));
 }

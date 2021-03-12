@@ -5,6 +5,7 @@ add_library(common
     "data/Border.h"
     "data/Position.h"
     "data/PlayerState.h"
+    "data/CPSAddress.h"
     "marshalling/Message.h"
     "marshalling/Message.cpp"
     "marshalling/Serialization.cpp"

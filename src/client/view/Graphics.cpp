@@ -2,36 +2,35 @@
 
 using namespace glm;
 
-GLfloat zs_worldserver::Graphics::posX = 0;
-GLfloat zs_worldserver::Graphics::posY = 0;
+zs_worldserver::Game* zs_worldserver::Graphics::game = game->getInstance();
 
 void zs_worldserver::Graphics::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 
     if (key == GLFW_KEY_W && action == GLFW_PRESS)
-        posY += 0.03f;
+        game->playerState.pos.y += 0.03f;
 
     if (key == GLFW_KEY_A && action == GLFW_PRESS)
-        posX -= 0.03f;
+        game->playerState.pos.x -= 0.03f;
 
     if (key == GLFW_KEY_S && action == GLFW_PRESS)
-       posY -= 0.03f;
+        game->playerState.pos.y -= 0.03f;
 
     if (key == GLFW_KEY_D && action == GLFW_PRESS)
-        posX += 0.03f;
+        game->playerState.pos.x += 0.03f;
 
     if (key == GLFW_KEY_W && action == GLFW_REPEAT)
-        posY += 0.03f;
+        game->playerState.pos.y += 0.03f;
 
     if (key == GLFW_KEY_A && action == GLFW_REPEAT)
-        posX -= 0.03f;
+        game->playerState.pos.x -= 0.03f;
 
     if (key == GLFW_KEY_S && action == GLFW_REPEAT)
-        posY -= 0.03f;
+        game->playerState.pos.y -= 0.03f;
 
     if (key == GLFW_KEY_D && action == GLFW_REPEAT) //remove these ;;;
-        posX += 0.03f;
+        game->playerState.pos.x += 0.03f;
 }
 
 void zs_worldserver::Graphics::error_callback(int error, const char* description) {
@@ -56,7 +55,7 @@ void zs_worldserver::Graphics::draw() {
     glPointSize(10.0);
     glBegin(GL_POINTS);
     glColor3f(0.f, 1.f, 0.f);
-    glVertex2f(posX, posY);
+    glVertex2f(game->playerState.pos.x, game->playerState.pos.y);
     glEnd();
 }
 
