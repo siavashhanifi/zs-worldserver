@@ -6,7 +6,7 @@ void gfxThread() {
 }
 
 void cpsComThread(zs_worldserver::CPSCom *cpsCom) {
-	
+	cpsCom->readNext();
 }
 
 zs_worldserver::Controller* zs_worldserver::Controller::singleton = NULL;
@@ -27,7 +27,10 @@ void zs_worldserver::Controller::joinGame(CPSAddress cpsAddress, std::string nam
 	cpsCom->connectToCPS(cpsAddress);
 	Status status = cpsCom->addClient(name);
 	if (status == Status::OK) {
+		std::cout << "Connected!\n";
 		std::thread cpsComThread(&cpsComThread, cpsCom);
 		cpsComThread.detach();
 	}
+	else
+		std::cout << "Failed to connect to CPS";
 }
