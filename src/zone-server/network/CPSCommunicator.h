@@ -12,16 +12,19 @@
 namespace zs_worldserver {
     class CPSCommunicator{
     public:
-        CPSCommunicator(Zone zone, std::string cpsIp, int cpsPort);
+        static CPSCommunicator *singleton;
+        static CPSCommunicator *getInstance();
+        void connectToCPS(std::string cpsIp, int cpsPort);
+        Status addToCPS(Zone zone);
     private:
         int connection;
         std::string cpsIp;
         int cpsPort;
-        Zone zone;
         Message *toSend;
         Message *msgIn;
         void createSocket();
         void connectSocket();
         void addToCPS();
+        void readNext();
     };
 }

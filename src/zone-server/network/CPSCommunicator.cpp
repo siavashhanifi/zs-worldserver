@@ -2,13 +2,18 @@
 #include <iostream>
 #include "CPSCommunicator.h"
 
-zs_worldserver::CPSCommunicator::CPSCommunicator(Zone zone, std::string cpsIp, int cpsPort){
-    this->zone = zone;
+zs_worldserver::CPSCommunicator* zs_worldserver::CPSCommunicator::singleton = nullptr;
+zs_worldserver::CPSCommunicator* zs_worldserver::CPSCommunicator::getInstance(){
+    if(singleton == nullptr)
+        singleton = new CPSCommunicator();
+    return singleton;
+}
+
+void zs_worldserver::CPSCommunicator::connectToCPS(std::string cpsIp, int cpsPort){
     this->cpsIp = cpsIp;
     this->cpsPort = cpsPort;
     createSocket();
     connectSocket();
-    addToCPS();
 }
 
 void zs_worldserver::CPSCommunicator::createSocket(){
@@ -30,7 +35,7 @@ void zs_worldserver::CPSCommunicator::connectSocket(){
         throw std::runtime_error("Failed to connect to client placement server.");
 }
 
-void zs_worldserver::CPSCommunicator::addToCPS(){
+zs_worldserver::Status zs_worldserver::CPSCommunicator::addToCPS(Zone zone){
     toSend = new Message(Head::ZCP_ADDZONE_REQ, zone);
     char *inBytes = new char[MSG_MAX_BYTES];
     send(connection, toSend->bytes, MSG_MAX_BYTES, 0);
@@ -41,5 +46,12 @@ void zs_worldserver::CPSCommunicator::addToCPS(){
     }
     
     msgIn = new Message(inBytes);
-    std::cout << (char)msgIn->getStatus() << "\n";
+    Status status = msgIn->getStatus();
+    delete msgIn;
+    return status;
+}
+
+
+void zs_worldserver::CPSCommunicator::readNext(){
+    
 }

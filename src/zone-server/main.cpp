@@ -30,6 +30,6 @@ int main(int argc, char **argv){
 
 
     
-    CPSCommunicator cpsCom(zone, cpsIp, cpsPort); 
+    Controller controller(zone, cpsIp, cpsPort);
     return 0;   
 }
