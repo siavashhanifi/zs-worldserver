@@ -8,10 +8,13 @@ namespace zs_worldserver{
     public:
         static Zones* zonesSingleton;
         static Zones* getInstance();
-        void addZone(Zone zone);
+        void addZone(Zone zone, int socket);
+        Zone getStartZone();
+        int getSocket(int zoneId);
     private:
         Zones();
         std::mutex lock;
         std::unordered_map<int, Zone> idZone;
+        std::unordered_map<int, int> idSocket;//key:id <-> value:socket
     };
 }

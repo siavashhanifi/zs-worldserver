@@ -1,4 +1,3 @@
-#include <sys/socket.h>
 #include "ConnectionHandler.h"
 
 zs_worldserver::ConnectionHandler::ConnectionHandler(int tcpConnection){
@@ -19,21 +18,29 @@ void zs_worldserver::ConnectionHandler::readNext(){
             break; 
         else if(n < MSG_MAX_BYTES)
             continue;
-        msg = new Message(bytes);
+        msgIn = new Message(bytes);
         handleMessage();
-        delete msg;
+        delete msgIn;
         n = 0;
     }
 }
 
 void zs_worldserver::ConnectionHandler::handleMessage(){
-    Head head = msg->getHead();
+    Head head = msgIn->getHead();
     switch(head){
         case Head::ZCP_ADDZONE_REQ:
         {
-            Zone zone = msg->getZone();
-            controller->addZone(zone);
-            reply = new Message(Head::ZCP_ADDZONE_RES, Status::OK);
+            Zone zone = msgIn->getZone();
+            controller->addZone(zone, tcpConnection);
+            reply = new Message(Head::CPZ_ADDZONE_RES, Status::OK);
+            sendReply();
+            delete reply;
+            break;
+        }case Head::CCP_ADDCLIENT_REQ:
+        {
+            std::string name = msgIn->getPlayerName();
+            Status status = controller->addClient(name);
+            reply = new Message(Head::CPC_ADDCLIENT_RES, status);
             sendReply();
             delete reply;
             break;

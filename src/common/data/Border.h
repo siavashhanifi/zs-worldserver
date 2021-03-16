@@ -2,11 +2,11 @@
 
 namespace zs_worldserver{
     struct Border {
-        int xMin;
-        int xMax;
-        int yMin;
-        int yMax;
-        int zMin;
-        int zMax;
+        float xMin;
+        float xMax;
+        float yMin;
+        float yMax;
+        float zMin;
+        float zMax;
     };
 }

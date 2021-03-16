@@ -13,6 +13,10 @@ add_executable (${PROJECT_NAME}
     "network/TCPListener.h"
     "model/Zones.cpp"
     "model/Zones.h"
+    "model/Session.h"
+    "model/Session.cpp"
+    "model/ZoneComUtil.h"
+    "model/ZoneComUtil.cpp"
  )
  
  target_link_libraries(${PROJECT_NAME} common pthread)
