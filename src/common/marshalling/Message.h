@@ -5,7 +5,6 @@
 #include <vector>
 #include <iostream>
 #include <string>
-#include <memory>
 #include "../data/Zone.h"
 #include "../data/Border.h"
 #include "../data/Position.h"

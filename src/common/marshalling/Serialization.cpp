@@ -31,9 +31,10 @@ void zs_worldserver::Message::serializeZone(){
     zoneString += to_string(zone.border.yMin) + ':';   
     zoneString += to_string(zone.border.zMax) + ':';
     zoneString += to_string(zone.border.zMin) + ':';
-        
+
     //[head,<bytes>-->zone]
-    std::memcpy((bytes + sizeof(head)), zoneString.c_str(), zoneString.length() + 1);
+    std::memcpy((bytes + sizeof(head)), zoneString.c_str(),
+            zoneString.length() + 1);
 }
 
 void zs_worldserver::Message::dserializeZone(){
@@ -73,9 +74,9 @@ void zs_worldserver::Message::serializePlayerState() {
     playerStateStr += to_string(playerState.id) + ':';
     playerStateStr += to_string(playerState.pos.x) + ':';
     playerStateStr += to_string(playerState.pos.y) + ':';
-
     //[head,<bytes>-->zone]
-    std::memcpy((bytes + sizeof(head)), playerStateStr.c_str(), playerStateStr.length() + 1);
+    std::memcpy((bytes + sizeof(head)), playerStateStr.c_str(),
+            playerStateStr.length() + 1);
 }
 
 void zs_worldserver::Message::dserializePlayerState() {

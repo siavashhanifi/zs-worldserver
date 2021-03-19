@@ -8,7 +8,8 @@ void test_CCP_ADDCLIENT_REQ();
 void test_CPZ_ADDCLIENT_REQ();
 
 int main(){
-    test_CPZ_ADDCLIENT_REQ();
+    test_ZCP_ADDZONE_REQ();
+    //test_CPZ_ADDCLIENT_REQ();
     return 0;
 }
 

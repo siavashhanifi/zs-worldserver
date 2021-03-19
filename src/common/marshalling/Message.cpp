@@ -35,7 +35,7 @@ zs_worldserver::Message::Message(char* bytes){
 zs_worldserver::Message::Message(Head head, Zone zone){
     this->head = head;
     this->zone = zone;
-    this->bytes = new char[sizeof(head) + sizeof(zone)];
+    this->bytes = new char[sizeof(head) + 128];
     serializeHead();
     serializeZone();
     size = strlen(bytes) + 1; 
@@ -65,7 +65,7 @@ zs_worldserver::Message::Message(Head head, std::string playerName) {
 zs_worldserver::Message::Message(Head head, PlayerState playerState) {
     this->head = head;
     this->playerState = playerState;
-    this->bytes = new char[sizeof(head) + sizeof(PlayerState)];
+    this->bytes = new char[sizeof(head) + 128];
     serializeHead();
     serializePlayerState();
     size = strlen(bytes) + 1;
