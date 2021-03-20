@@ -18,7 +18,9 @@ namespace zs_worldserver{
         CCP_ADDCLIENT_REQ = 'c',
         CPZ_ADDCLIENT_REQ = 'd',
         ZCP_ADDCLIENT_RES = 'e',
-        CPC_ADDCLIENT_RES = 'f'
+        CPC_ADDCLIENT_RES_ONE = 'f',
+        CPC_ADDCLIENT_RES_TWO = 'g',
+        CPC_ADDCLIENT_RES_THREE = 'h'
     };
     
     enum class Status : char {
@@ -36,13 +38,15 @@ namespace zs_worldserver{
         Message(char *bytes);
         Message(Head, Zone);
         Message(Head, Status);
-        Message(Head, std::string);
+        Message(Head, std::string playerName);
         Message(Head, PlayerState);
+        Message(Head, int playerId);
         Head getHead();
         Zone getZone();
         Status getStatus();
         std::string getPlayerName();
         PlayerState getPlayerState();
+        int getPlayerId();
 
     private:
         Head head;
@@ -50,6 +54,7 @@ namespace zs_worldserver{
         Status status;
         std::string playerName;
         PlayerState playerState;
+        int playerId;
        
         /*serialization functions*/
         void serializeHead();
@@ -57,12 +62,14 @@ namespace zs_worldserver{
         void serializeStatus();
         void serializeName();
         void serializePlayerState();
+        void serializePlayerId();
 
         void dserializeHead();
         void dserializeZone();
         void dserializeStatus();
         void dserializeName();
         void dserializePlayerState();
+        void dserializePlayerId();
         
     };
 }

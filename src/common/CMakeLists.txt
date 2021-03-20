@@ -6,9 +6,11 @@ add_library(common
     "data/Position.h"
     "data/PlayerState.h"
     "data/CPSAddress.h"
+    "data/AddClientDTO.h"
     "marshalling/Message.h"
     "marshalling/Message.cpp"
     "marshalling/Serialization.cpp"
+    "marshalling/Deserialization.cpp"
  )
 
 target_include_directories (common PUBLIC .)
