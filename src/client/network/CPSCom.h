@@ -5,6 +5,7 @@
 #include <WS2tcpip.h>
 #include "marshalling/Message.h"
 #include "data/CPSAddress.h"
+#include "data/AddClientDTO.h"
 #include "../model/Game.h"
 
 namespace zs_worldserver {
@@ -12,7 +13,7 @@ namespace zs_worldserver {
     public:
         static CPSCom* singleton;
         static CPSCom* getInstance();
-        Status addClient(std::string name);
+        AddClientDTO addClient(std::string name);
         void connectToCPS(CPSAddress cpsAddress);
         void readNext();
     private:

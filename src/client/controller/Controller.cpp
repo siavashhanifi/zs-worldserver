@@ -25,12 +25,17 @@ zs_worldserver::Controller::Controller() {
 
 void zs_worldserver::Controller::joinGame(CPSAddress cpsAddress, std::string name) {
 	cpsCom->connectToCPS(cpsAddress);
-	Status status = cpsCom->addClient(name);
-	if (status == Status::OK) {
+	AddClientDTO dto = cpsCom->addClient(name);
+	if (dto.status == Status::OK) {
 		std::cout << "Connected!\n";
+                std::cout << "Got zone: " << dto.zone.id << " ip: " << dto.zone.ip << "\n";
+                std::cout << "port: " << dto.zone.port;
+                zsCom->connect(dto.zone.ip, dto.zone.port);
+                game->setPlayerId(dto.playerId);
 		std::thread cpsComThread(&cpsComThread, cpsCom);
-		cpsComThread.detach();
+		cpsComThread.join();
 	}
 	else
 		std::cout << "Failed to connect to CPS";
+        while(true); // WAAAAIT
 }

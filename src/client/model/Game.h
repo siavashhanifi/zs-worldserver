@@ -1,5 +1,6 @@
 #pragma once
 
+#include <mutex>
 #include "data/PlayerState.h"
 
 namespace zs_worldserver {
@@ -7,8 +8,12 @@ namespace zs_worldserver {
 	public:
 		static Game* singleton;
 		static Game* getInstance();
-		PlayerState playerState;
+                void setPlayerId(int);
+                void setPlayerPos(Position);
 	private:
+                std::mutex idLock;
+                std::mutex posLock;
 		Game();
+                PlayerState playerState;
 	};
 }

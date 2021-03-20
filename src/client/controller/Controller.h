@@ -17,5 +17,6 @@ namespace zs_worldserver {
 		Controller();
 		Game* game;
 		CPSCom* cpsCom;
+                ZSCom* zsCom;
 	};
 }

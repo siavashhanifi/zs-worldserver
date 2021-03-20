@@ -43,13 +43,21 @@ void zs_worldserver::CPSCom::connectSocket() {
 	}
 }
 
-zs_worldserver::Status zs_worldserver::CPSCom::addClient(std::string name) {
+zs_worldserver::AddClientDTO zs_worldserver::CPSCom::addClient(std::string name) {
 	toSend = new Message(Head::CCP_ADDCLIENT_REQ, name);
 	send(connection, toSend->bytes, MSG_MAX_BYTES, 0);
 	delete toSend;
 	readReply();
 	Status status = msgIn->getStatus();
-	return status;
+        delete msgIn;
+        readReply();
+        Zone zone = msgIn->getZone();
+        delete msgIn;
+        readReply();
+        int id = msgIn->getPlayerId();
+        delete msgIn;
+        AddClientDTO dto = { status , zone, id };
+	return dto;
 }
 
 void zs_worldserver::CPSCom::readReply() {
@@ -82,15 +90,6 @@ void zs_worldserver::CPSCom::readNext() {
 void zs_worldserver::CPSCom::handleInMsg() {
 	Head head = msgIn->getHead();
 	switch (head) {
-	case Head::CPC_ADDCLIENT_RES:
-	{
-		Status status = msgIn->getStatus();
-		if (status == Status::OK) {
-			PlayerState ps = msgIn->getPlayerState();
-			game->playerState = ps;
-		}
-		break;
-	}
 	default:
 		break;
 	}
