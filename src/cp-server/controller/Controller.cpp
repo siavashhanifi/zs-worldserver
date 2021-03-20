@@ -17,15 +17,13 @@ void zs_worldserver::Controller::addZone(Zone zone, int socket){
     zones->addZone(zone, socket);
 }
 
-zs_worldserver::Status zs_worldserver::Controller::addClient(std::string name){
+zs_worldserver::AddClientDTO zs_worldserver::Controller::addClient(std::string name){
     int clientId = session->generateId();
     Zone startZone = zones->getStartZone();
     int zoneSocket =  zones->getSocket(startZone.id);
     Position startPosition = {startZone.border.xMax/2, startZone.border.yMin/2};
-    PlayerState playerState = {clientId, startPosition};
-    std::cout << "Added client: " << name << " id: " << clientId 
-        << "start pos: " << startPosition.x << ", "<< startPosition.y << "\n";
-    Status status = ZoneComUtil::addClientReq(playerState, zoneSocket);
-    return status;
-    
+    PlayerState ps = {clientId, startPosition};
+    Status status = ZoneComUtil::addClientReq(ps, zoneSocket);
+    AddClientDTO dto = { status, clientId };
+    return dto;
 }

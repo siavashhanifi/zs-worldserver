@@ -10,3 +10,7 @@ zs_worldserver::Game* zs_worldserver::Game::getInstance(){
 zs_worldserver::Game::Game(){
     
 }
+
+void zs_worldserver::Game::addPlayer(PlayerState ps){
+    
+}

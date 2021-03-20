@@ -9,6 +9,12 @@ zs_worldserver::CPSCommunicator* zs_worldserver::CPSCommunicator::getInstance(){
     return singleton;
 }
 
+zs_worldserver::CPSCommunicator::CPSCommunicator(){
+    controller = controller->getInstance();
+    inBytes = new char[MSG_MAX_BYTES];
+}
+
+
 void zs_worldserver::CPSCommunicator::connectToCPS(std::string cpsIp, int cpsPort){
     this->cpsIp = cpsIp;
     this->cpsPort = cpsPort;
@@ -37,8 +43,8 @@ void zs_worldserver::CPSCommunicator::connectSocket(){
 
 zs_worldserver::Status zs_worldserver::CPSCommunicator::addToCPS(Zone zone){
     toSend = new Message(Head::ZCP_ADDZONE_REQ, zone);
-    char *inBytes = new char[MSG_MAX_BYTES];
-    send(connection, toSend->bytes, MSG_MAX_BYTES, 0);
+    sendMessage();
+    delete toSend;
     
     int n = 0;
     while(n < MSG_MAX_BYTES){
@@ -53,5 +59,42 @@ zs_worldserver::Status zs_worldserver::CPSCommunicator::addToCPS(Zone zone){
 
 
 void zs_worldserver::CPSCommunicator::readNext(){
-    
+    int n = 0;
+    while(true){
+        n += read(connection, inBytes, MSG_MAX_BYTES);
+        if(n  == -1 &&  EBADF)
+            break; 
+        else if(n < MSG_MAX_BYTES)
+            continue;
+        msgIn = new Message(inBytes);
+        handleMessage();
+        delete msgIn;
+        n = 0;
+    }
+}
+
+void zs_worldserver::CPSCommunicator::handleMessage(){
+    std::cout << "handling message\n";
+    Head head = msgIn->getHead();
+    switch(head){
+        case Head::CPZ_ADDCLIENT_REQ:
+        {
+            std::cout << "got head: CPZ_ADDCLIENT_REQ\n";
+            PlayerState ps = msgIn->getPlayerState();
+            std::cout << "ps id: " << ps.id << "\n";
+            Status status = controller->addClient(ps);
+            std::cout << "called addClient\n";
+            toSend = new Message(Head::ZCP_ADDCLIENT_RES, status);
+            sendMessage();
+            delete toSend;
+            std::cout << "sent reply\n";
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+void zs_worldserver::CPSCommunicator::sendMessage(){
+        send(connection, toSend->bytes, MSG_MAX_BYTES, 0);
 }

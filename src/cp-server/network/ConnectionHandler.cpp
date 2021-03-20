@@ -39,8 +39,11 @@ void zs_worldserver::ConnectionHandler::handleMessage(){
         }case Head::CCP_ADDCLIENT_REQ:
         {
             std::string name = msgIn->getPlayerName();
-            Status status = controller->addClient(name);
-            reply = new Message(Head::CPC_ADDCLIENT_RES, status);
+            AddClientDTO dto = controller->addClient(name);
+            reply = new Message(Head::CPC_ADDCLIENT_RES_ONE, dto.status);
+            sendReply();
+            delete reply;
+            reply = new Message(Head::CPC_ADDCLIENT_RES_TWO, dto.playerId);
             sendReply();
             delete reply;
             break;

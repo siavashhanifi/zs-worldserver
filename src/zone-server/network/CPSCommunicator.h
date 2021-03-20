@@ -7,24 +7,33 @@
 #include <arpa/inet.h>
 #include <netdb.h> 
 #include <errno.h>
-#include "../../common/marshalling/Message.h"
+#include "marshalling/Message.h"
+#include  "../controller/Controller.h"
 
 namespace zs_worldserver {
+        
+    class Controller;
+    
     class CPSCommunicator{
     public:
         static CPSCommunicator *singleton;
         static CPSCommunicator *getInstance();
         void connectToCPS(std::string cpsIp, int cpsPort);
         Status addToCPS(Zone zone);
+        void readNext();
     private:
+        CPSCommunicator();
+        Controller *controller;
         int connection;
         std::string cpsIp;
         int cpsPort;
+        char *inBytes;
         Message *toSend;
         Message *msgIn;
         void createSocket();
         void connectSocket();
         void addToCPS();
-        void readNext();
+        void handleMessage();
+        void sendMessage();
     };
 }

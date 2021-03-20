@@ -29,7 +29,7 @@ int main(int argc, char **argv){
     std::cout << zone.border.zMin << std::endl;
 
 
-    
-    Controller controller(zone, cpsIp, cpsPort);
+    Controller* controller =  controller->getInstance();
+    controller->init(zone, cpsIp, cpsPort);
     return 0;   
 }

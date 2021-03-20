@@ -1,10 +1,11 @@
 #pragma once
 
 #include <string>
-#include "../../common/data/Zone.h"
 #include "../model/Zones.h"
 #include "../model/Session.h"
 #include "../model/ZoneComUtil.h"
+#include "data/AddClientDTO.h"
+#include "data/Zone.h"
 
 namespace zs_worldserver {
     class Controller {
@@ -12,7 +13,7 @@ namespace zs_worldserver {
         static Controller* controller;
         static Controller* getInstance();
         void addZone(Zone zone, int socket);
-        Status addClient(std::string name);
+        AddClientDTO addClient(std::string name);
     private:
         Controller();
         Zones *zones;
