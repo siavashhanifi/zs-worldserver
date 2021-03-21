@@ -23,12 +23,12 @@ void zs_worldserver::Message::dserializeZone(){
     zone.id = stoi(result.at(0));
     zone.ip = result.at(1);
     zone.udpPort = stoi(result.at(2));
-    zone.border.xMax = stoi(result.at(3));
-    zone.border.xMin = stoi(result.at(4));
-    zone.border.yMax = stoi(result.at(5));
-    zone.border.yMin = stoi(result.at(6));
-    zone.border.zMax = stoi(result.at(7));
-    zone.border.zMin = stoi(result.at(8));
+    zone.border.xMax = stof(result.at(3));
+    zone.border.xMin = stof(result.at(4));
+    zone.border.yMax = stof(result.at(5));
+    zone.border.yMin = stof(result.at(6));
+    zone.border.zMax = stof(result.at(7));
+    zone.border.zMin = stof(result.at(8));
 }
 
 void zs_worldserver::Message::dserializeName() {
