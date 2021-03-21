@@ -55,7 +55,7 @@ zs_worldserver::Message::Message(char* bytes){
 zs_worldserver::Message::Message(Head head, Zone zone){
     this->head = head;
     this->zone = zone;
-    this->bytes = new char[sizeof(head) + 128];
+    this->bytes = new char[MSG_MAX_BYTES];
     serializeHead();
     serializeZone();
     size = strlen(bytes) + 1; 
@@ -64,7 +64,7 @@ zs_worldserver::Message::Message(Head head, Zone zone){
 zs_worldserver::Message::Message(Head head, Status status){
     this->head = head;
     this->status = status;
-    this->bytes = new char[sizeof(head) + sizeof(status) + 1];// + 1('\0')
+    this->bytes = new char[MSG_MAX_BYTES];
     serializeHead();
     serializeStatus();//STATUS
     size = strlen(bytes) + 1; 
@@ -76,7 +76,7 @@ zs_worldserver::Message::Message(Head head, std::string playerName) {
 
     this->head = head;
     this->playerName = playerName;
-    this->bytes = new char[sizeof(head) + playerName.length() + 1];
+    this->bytes = new char[MSG_MAX_BYTES];
     serializeHead();
     serializeName();
     size = strlen(bytes) + 1;
@@ -85,7 +85,7 @@ zs_worldserver::Message::Message(Head head, std::string playerName) {
 zs_worldserver::Message::Message(Head head, PlayerState playerState) {
     this->head = head;
     this->playerState = playerState;
-    this->bytes = new char[sizeof(head) + 128];
+    this->bytes = new char[MSG_MAX_BYTES];
     serializeHead();
     serializePlayerState();
     size = strlen(bytes) + 1;
@@ -94,7 +94,7 @@ zs_worldserver::Message::Message(Head head, PlayerState playerState) {
 zs_worldserver::Message::Message(Head head, int playerId) {
     this->head = head;
     this->playerId = playerId;
-    this->bytes = new char[sizeof(head) + 128];
+    this->bytes = new char[MSG_MAX_BYTES];
     serializeHead();
     serializePlayerId();
     size = strlen(bytes) + 1;

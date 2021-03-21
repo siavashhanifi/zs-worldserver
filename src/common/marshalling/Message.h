@@ -28,7 +28,7 @@ namespace zs_worldserver{
         FAILED = 'y'
     };
 
-    const int MSG_MAX_BYTES = sizeof(Head) + sizeof(Zone); 
+    const int MSG_MAX_BYTES = 128; 
     const int MAX_NAME_LEN = 8;
     
     class Message{
