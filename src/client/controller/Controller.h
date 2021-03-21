@@ -3,8 +3,10 @@
 #include <string>
 #include <thread>
 #include "data/CPSAddress.h"
+#include "data/AddClientDTO.h"
 #include "../model/Game.h"
 #include "../network/CPSCom.h"
+#include "../network/ZSCom.h"
 #include "../view/Graphics.h"
 
 namespace zs_worldserver {
@@ -17,6 +19,6 @@ namespace zs_worldserver {
 		Controller();
 		Game* game;
 		CPSCom* cpsCom;
-                ZSCom* zsCom;
+        ZSCom* zsCom;
 	};
 }

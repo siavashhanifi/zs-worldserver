@@ -8,12 +8,12 @@ namespace zs_worldserver {
 	public:
 		static Game* singleton;
 		static Game* getInstance();
-                void setPlayerId(int);
-                void setPlayerPos(Position);
+        void setPlayerId(int);
+        void setPlayerPos(Position);
+		PlayerState playerState;
 	private:
-                std::mutex idLock;
-                std::mutex posLock;
+        std::mutex idLock;
+		std::mutex posLock;
 		Game();
-                PlayerState playerState;
 	};
 }

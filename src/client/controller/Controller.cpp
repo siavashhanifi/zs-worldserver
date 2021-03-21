@@ -29,8 +29,8 @@ void zs_worldserver::Controller::joinGame(CPSAddress cpsAddress, std::string nam
 	if (dto.status == Status::OK) {
 		std::cout << "Connected!\n";
                 std::cout << "Got zone: " << dto.zone.id << " ip: " << dto.zone.ip << "\n";
-                std::cout << "port: " << dto.zone.port;
-                zsCom->connect(dto.zone.ip, dto.zone.port);
+                std::cout << "port: " << dto.zone.udpPort;
+                //zsCom->connect(dto.zone.ip, dto.zone.udpPort);
                 game->setPlayerId(dto.playerId);
 		std::thread cpsComThread(&cpsComThread, cpsCom);
 		cpsComThread.join();

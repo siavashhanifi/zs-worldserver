@@ -13,12 +13,12 @@ zs_worldserver::Game::Game() {
 	playerState.pos.y = 0;
 }
 
-void zs_worldserver::setPlayerId(int playerId) {
+void zs_worldserver::Game::setPlayerId(int playerId) {
         const std::lock_guard<std::mutex> lockGuard(idLock);
 	playerState.id = playerId;
 }
 
-void zs_worldserver::setPlayerPos(Position pos){
+void zs_worldserver::Game::setPlayerPos(Position pos){
         const std::lock_guard<std::mutex> lockGuard(posLock);
         playerState.pos = pos;
 }

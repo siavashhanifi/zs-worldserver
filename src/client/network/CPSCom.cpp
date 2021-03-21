@@ -49,14 +49,14 @@ zs_worldserver::AddClientDTO zs_worldserver::CPSCom::addClient(std::string name)
 	delete toSend;
 	readReply();
 	Status status = msgIn->getStatus();
-        delete msgIn;
-        readReply();
-        Zone zone = msgIn->getZone();
-        delete msgIn;
-        readReply();
-        int id = msgIn->getPlayerId();
-        delete msgIn;
-        AddClientDTO dto = { status , zone, id };
+    delete msgIn;
+    readReply();
+    Zone zone = msgIn->getZone();
+    delete msgIn;
+    readReply();
+    int id = msgIn->getPlayerId();
+    delete msgIn;
+    AddClientDTO dto = { status , zone, id };
 	return dto;
 }
 

@@ -12,7 +12,6 @@ namespace zs_worldserver {
     public:
         static ZSCom* singleton;
         static ZSCom* getInstance();
-        Status addClient(std::string name);
         void connectToZS(Zone zone);
         void readNext();
     private:

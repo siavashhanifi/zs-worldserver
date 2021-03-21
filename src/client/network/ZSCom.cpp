@@ -29,7 +29,7 @@ void zs_worldserver::ZSCom::connectToZS(Zone zone) {
 void zs_worldserver::ZSCom::createSocket(Zone zone) {
 	this->zsAddress.sin_family = AF_INET;
 	this->zsAddress.sin_addr.s_addr = inet_addr(zone.ip.c_str());
-	this->zsAddress.sin_port = htons(zone.port);
+	this->zsAddress.sin_port = htons(zone.udpPort);
 	connection = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 }
 
@@ -41,10 +41,6 @@ void zs_worldserver::ZSCom::connectSocket() {
 		connection = INVALID_SOCKET;
 		std::cerr << "Failed to connect: " << WSAGetLastError() << std::endl;
 	}
-}
-
-zs_worldserver::Status zs_worldserver::ZSCom::addClient(std::string name) {
-
 }
 
 void zs_worldserver::ZSCom::readReply() {
