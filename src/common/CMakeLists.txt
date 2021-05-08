@@ -7,10 +7,11 @@ add_library(common
     "data/PlayerState.h"
     "data/CPSAddress.h"
     "data/AddClientDTO.h"
-    "marshalling/Message.h"
-    "marshalling/Message.cpp"
-    "marshalling/Serialization.cpp"
-    "marshalling/Deserialization.cpp"
+    "marshalling/TCP/Message.h"
+    "marshalling/TCP/Message.cpp"
+    "marshalling/TCP/Serialization.cpp"
+    "marshalling/TCP/Deserialization.cpp"
+    "marshalling/UDP/UDPMessageHelper.h"
  )
 
 target_include_directories (common PUBLIC .)

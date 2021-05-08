@@ -4,6 +4,11 @@
 void cpsComThread(zs_worldserver::CPSCommunicator* cpsCom){
     cpsCom->readNext();
 }
+
+void clientComThread(zs_worldserver::ClientCom* clientCom){
+    clientCom->readNext();
+}
+
 zs_worldserver::Controller* zs_worldserver::Controller::singleton 
         = nullptr;
 zs_worldserver::Controller* zs_worldserver::Controller::getInstance(){
@@ -20,12 +25,17 @@ void zs_worldserver::Controller::init(Zone zone,std::string ip, int port){
     this->zone = zone;
     game = game->getInstance();
     cpsCom = cpsCom->getInstance();
+    clientCom = clientCom->getInstance();
+    clientCom->init(zone);
+    std::thread ccthread(clientComThread, clientCom);
+    ccthread.detach();
+    
     cpsCom->connectToCPS(ip, port);
     Status status = cpsCom->addToCPS(zone);
     if(status == Status::OK){
         std::cout << "Successfully added to CPS\n";
-        /*std::thread cpsComThrd(cpsComThread, cpsCom);
-        cpsComThrd.join();*/
+        std::thread cpsThread(cpsComThread, cpsCom);
+        cpsThread.join();
         std::cout << "reading next\n";
         cpsCom->readNext();
     }

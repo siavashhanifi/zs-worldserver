@@ -60,6 +60,7 @@ void zs_worldserver::Graphics::draw() {
 }
 
 //Initialise GLFW
+
 zs_worldserver::Graphics::Graphics() {
 
     if (!glfwInit())

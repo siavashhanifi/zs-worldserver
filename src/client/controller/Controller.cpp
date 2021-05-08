@@ -27,15 +27,24 @@ void zs_worldserver::Controller::joinGame(CPSAddress cpsAddress, std::string nam
 	cpsCom->connectToCPS(cpsAddress);
 	AddClientDTO dto = cpsCom->addClient(name);
 	if (dto.status == Status::OK) {
-		std::cout << "Connected!\n";
-                std::cout << "Got zone: " << dto.zone.id << " ip: " << dto.zone.ip << "\n";
-                std::cout << "port: " << dto.zone.udpPort;
-                //zsCom->connect(dto.zone.ip, dto.zone.udpPort);
+		std::cout << "*************GOT ZONE***********\n";
+                std::cout << "id: " << dto.zone.id << std::endl;
+                std::cout << "ip: " << dto.zone.ip << std::endl;
+                std::cout << "port: " << dto.zone.udpPort << std::endl;
+                std::cout << "********************************\n";
+                std::cout << "********GOT PLAYER ID***********\n";
+                std::cout << "player_id: " << dto.playerId << std::endl;
                 game->setPlayerId(dto.playerId);
-		std::thread cpsComThread(&cpsComThread, cpsCom);
-		cpsComThread.join();
+                zsCom.setZone(dto.zone);
+                
+                std::thread cpsComThread(&cpsComThread, cpsCom);
+		cpsComThread.detach();
+                
+                zsCom.getGameState();
+                //zsCom->connect(dto.zone.ip, dto.zone.udpPort);
+
 	}
 	else
-		std::cout << "Failed to connect to CPS";
+            std::cout << "Failed to connect to CPS";
         while(true); // WAAAAIT
 }

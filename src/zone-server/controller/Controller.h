@@ -2,6 +2,7 @@
 
 #include <thread>
 #include "../network/CPSCommunicator.h"
+#include "../network/ClientCom.h"
 #include "../model/Game.h"
 #include "data/Zone.h"
 #include "data/PlayerState.h"
@@ -21,5 +22,6 @@ namespace zs_worldserver {
         Zone zone;
         CPSCommunicator *cpsCom;
         Game *game;
+        ClientCom *clientCom;
     };
 }

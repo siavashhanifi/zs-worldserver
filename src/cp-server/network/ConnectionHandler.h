@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <sys/socket.h>
-#include "../../common/marshalling/Message.h"
+#include "marshalling/TCP/Message.h"
 #include "../controller/Controller.h"
 
 namespace zs_worldserver{

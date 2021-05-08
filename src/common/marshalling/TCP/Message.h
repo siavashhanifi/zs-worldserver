@@ -5,13 +5,13 @@
 #include <vector>
 #include <iostream>
 #include <string>
-#include "../data/Zone.h"
-#include "../data/Border.h"
-#include "../data/Position.h"
-#include "../data/PlayerState.h"
+#include "data/Zone.h"
+#include "data/Border.h"
+#include "data/Position.h"
+#include "data/PlayerState.h"
 
-namespace zs_worldserver{
-    
+namespace zs_worldserver {
+
     enum class Head : char {
         ZCP_ADDZONE_REQ = 'a',
         CPZ_ADDZONE_RES = 'b',
@@ -22,16 +22,16 @@ namespace zs_worldserver{
         CPC_ADDCLIENT_RES_TWO = 'g',
         CPC_ADDCLIENT_RES_THREE = 'h'
     };
-    
+
     enum class Status : char {
         OK = 'z',
         FAILED = 'y'
     };
 
-    const int MSG_MAX_BYTES = 128; 
+    const int MSG_MAX_BYTES = 128;
     const int MAX_NAME_LEN = 8;
-    
-    class Message{
+
+    class Message {
     public:
         char* bytes;
         int size;
@@ -55,7 +55,7 @@ namespace zs_worldserver{
         std::string playerName;
         PlayerState playerState;
         int playerId;
-       
+
         /*serialization functions*/
         void serializeHead();
         void serializeZone();
@@ -70,6 +70,6 @@ namespace zs_worldserver{
         void dserializeName();
         void dserializePlayerState();
         void dserializePlayerId();
-        
+
     };
 }

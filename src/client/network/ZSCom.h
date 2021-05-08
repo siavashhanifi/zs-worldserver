@@ -12,18 +12,9 @@ namespace zs_worldserver {
     public:
         static ZSCom* singleton;
         static ZSCom* getInstance();
-        void connectToZS(Zone zone);
-        void readNext();
+        void setZone(Zone);
+        void getGameState();
     private:
         ZSCom();
-        Game* game;
-        SOCKET connection;
-        sockaddr_in zsAddress;
-        Message* toSend;
-        Message* msgIn;
-        void createSocket(Zone);
-        void connectSocket();
-        void readReply();
-        void handleInMsg();
     };
 }

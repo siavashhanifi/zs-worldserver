@@ -7,14 +7,14 @@
 #include <arpa/inet.h>
 #include <netdb.h> 
 #include <errno.h>
-#include "marshalling/Message.h"
+#include "marshalling/TCP/Message.h"
 #include  "../controller/Controller.h"
 
 namespace zs_worldserver {
-        
+
     class Controller;
-    
-    class CPSCommunicator{
+
+    class CPSCommunicator {
     public:
         static CPSCommunicator *singleton;
         static CPSCommunicator *getInstance();

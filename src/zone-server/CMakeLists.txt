@@ -5,6 +5,8 @@ add_executable(${PROJECT_NAME}
     "main.h"
     "network/CPSCommunicator.cpp"
     "network/CPSCommunicator.h"
+    "network/ClientCom.h"
+    "network/ClientCom.cpp"
     "controller/Controller.h"
     "controller/Controller.cpp"
     "model/Game.h"
