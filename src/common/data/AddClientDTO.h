@@ -1,5 +1,6 @@
 #pragma once
 
+#include "marshalling/TCP/Message.h"
 #include "data/PlayerState.h"
 #include "data/Zone.h"
 

@@ -3,7 +3,7 @@
 #include <string>
 #include <WinSock2.h>
 #include <WS2tcpip.h>
-#include "marshalling/Message.h"
+#include "marshalling/TCP/Message.h"
 #include "data/CPSAddress.h"
 #include "data/AddClientDTO.h"
 #include "../model/Game.h"
