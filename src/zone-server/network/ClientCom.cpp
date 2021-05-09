@@ -18,10 +18,10 @@ void zs_worldserver::ClientCom::init(Zone zone){
         perror("socket creation failed");
         exit(EXIT_FAILURE);
     }
-      
+          
     memset(&servaddr, 0, sizeof(servaddr));
     memset(&cliaddr, 0, sizeof(cliaddr));
-      
+
     // Filling server information
     servaddr.sin_family    = AF_INET; // IPv4
     servaddr.sin_addr.s_addr = INADDR_ANY;
@@ -32,8 +32,7 @@ void zs_worldserver::ClientCom::init(Zone zone){
     if(rc < 0){
         std::cerr<<"Failed to bind UDP socket\n";
         exit(EXIT_FAILURE);
-    }
-    
+    }  
 }
 
 void zs_worldserver::ClientCom::readNext(){

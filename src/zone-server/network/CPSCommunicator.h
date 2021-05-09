@@ -29,7 +29,7 @@ namespace zs_worldserver {
         int cpsPort;
         char *inBytes;
         Message *toSend;
-        Message *msgIn;
+        Message *inMsg;
         void createSocket();
         void connectSocket();
         void addToCPS();

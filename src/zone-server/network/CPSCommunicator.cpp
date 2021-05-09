@@ -45,42 +45,34 @@ zs_worldserver::Status zs_worldserver::CPSCommunicator::addToCPS(Zone zone){
     toSend = new Message(Head::ZCP_ADDZONE_REQ, zone);
     sendMessage();
     delete toSend;
-    
-    int n = 0;
-    while(n < MSG_MAX_BYTES){
-        n += read(connection, inBytes, MSG_MAX_BYTES);
-    }
-    
-    msgIn = new Message(inBytes);
-    Status status = msgIn->getStatus();
-    delete msgIn;
+    std::cout << "sent ZCP_ADDZONE_REQ\n";    
+    recv(connection, inBytes, MSG_MAX_BYTES, MSG_WAITALL);
+    std::cout << "Recieved response\n";    
+
+    inMsg = new Message(inBytes);
+    Status status = inMsg->getStatus();
+    delete inMsg;
     return status;
 }
 
 
 void zs_worldserver::CPSCommunicator::readNext(){
-    int n = 0;
     while(true){
-        n += read(connection, inBytes, MSG_MAX_BYTES);
-        if(n  == -1 &&  EBADF)
-            break; 
-        else if(n < MSG_MAX_BYTES)
-            continue;
-        msgIn = new Message(inBytes);
+        recv(connection, inBytes, MSG_MAX_BYTES, MSG_WAITALL);
+        inMsg = new Message(inBytes);
         handleMessage();
-        delete msgIn;
-        n = 0;
+        delete inMsg;
     }
 }
 
 void zs_worldserver::CPSCommunicator::handleMessage(){
     std::cout << "handling message\n";
-    Head head = msgIn->getHead();
+    Head head = inMsg->getHead();
     switch(head){
         case Head::CPZ_ADDCLIENT_REQ:
         {
             std::cout << "got head: CPZ_ADDCLIENT_REQ\n";
-            PlayerState ps = msgIn->getPlayerState();
+            PlayerState ps = inMsg->getPlayerState();
             std::cout << "ps id: " << ps.id << "\n";
             Status status = controller->addClient(ps);
             std::cout << "called addClient\n";

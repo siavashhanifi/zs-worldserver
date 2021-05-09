@@ -13,12 +13,12 @@ namespace zs_worldserver{
         ConnectionHandler(int tcpConnection);
         ~ConnectionHandler();
     private:
-        int tcpConnection;
+        int connection;
         char bytes[MSG_MAX_BYTES];
-        Message *msgIn;
+        Message *inMsg;
         Message *reply;
         Controller  *controller;
-        void readNext();
+        void listenForInMsgs();
         void handleMessage();
         void sendReply();
     };

@@ -1,44 +1,41 @@
 #include "ConnectionHandler.h"
+#include <iostream>
 
 zs_worldserver::ConnectionHandler::ConnectionHandler(int tcpConnection){
-    this->tcpConnection = tcpConnection;
+    this->connection = tcpConnection;
     controller = controller->getInstance();
-    readNext();
+    listenForInMsgs();
 }
 
 zs_worldserver::ConnectionHandler::~ConnectionHandler(){
-    close(tcpConnection);
+    close(connection);
 }
 
-void zs_worldserver::ConnectionHandler::readNext(){
-    int n = 0;
+void zs_worldserver::ConnectionHandler::listenForInMsgs(){
     while(true){
-        n += read(tcpConnection, bytes, MSG_MAX_BYTES);
-        if(n  == -1 &&  EBADF)
-            break; 
-        else if(n < MSG_MAX_BYTES)
-            continue;
-        msgIn = new Message(bytes);
+	recv(connection, bytes, MSG_MAX_BYTES, MSG_WAITALL);
+        inMsg = new Message(bytes);
         handleMessage();
-        delete msgIn;
-        n = 0;
+        delete inMsg;
     }
 }
 
 void zs_worldserver::ConnectionHandler::handleMessage(){
-    Head head = msgIn->getHead();
+    Head head = inMsg->getHead();
     switch(head){
         case Head::ZCP_ADDZONE_REQ:
         {
-            Zone zone = msgIn->getZone();
-            controller->addZone(zone, tcpConnection);
+            std::cout<<"GET ADDZONE REQ: ";
+            Zone zone = inMsg->getZone();
+            std::cout<< zone.id << std::endl;
+            controller->addZone(zone, connection);
             reply = new Message(Head::CPZ_ADDZONE_RES, Status::OK);
             sendReply();
             delete reply;
             break;
         }case Head::CCP_ADDCLIENT_REQ:
         {
-            std::string name = msgIn->getPlayerName();
+            std::string name = inMsg->getPlayerName();
             AddClientDTO dto = controller->addClient(name);
             reply = new Message(Head::CPC_ADDCLIENT_RES_ONE, dto.status);
             sendReply();
@@ -55,5 +52,5 @@ void zs_worldserver::ConnectionHandler::handleMessage(){
 
 void zs_worldserver::ConnectionHandler::sendReply(){
     char *bytes = reply->bytes;
-    send(tcpConnection, bytes, MSG_MAX_BYTES, 0);
+    send(connection, bytes, MSG_MAX_BYTES, 0);
 }
