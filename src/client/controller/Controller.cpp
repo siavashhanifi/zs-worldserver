@@ -6,7 +6,7 @@ void gfxThread() {
 }
 
 void cpsComThread(zs_worldserver::CPSCom *cpsCom) {
-	cpsCom->readNext();
+	cpsCom->listenForNextInMsg();
 }
 
 zs_worldserver::Controller* zs_worldserver::Controller::singleton = NULL;

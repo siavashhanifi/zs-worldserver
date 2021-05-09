@@ -16,7 +16,7 @@ zs_worldserver::ZSCom::ZSCom() {
 
 	connection = INVALID_SOCKET;
 	zsAddress = { 0 };
-	msgIn = nullptr;
+	inMsg = nullptr;
 	toSend = nullptr;
 	game = game->getInstance();
 }
@@ -43,44 +43,31 @@ void zs_worldserver::ZSCom::connectSocket() {
 	}
 }
 
-void zs_worldserver::ZSCom::readReply() {
+void zs_worldserver::ZSCom::readInMsg() {
 	char* inBytes = new char[MSG_MAX_BYTES];
-
-	int n = 0;
-	while (n < MSG_MAX_BYTES) {
-		n += recv(connection, inBytes, MSG_MAX_BYTES, 0);
-	}
-
-	msgIn = new Message(inBytes);
+	recv(connection, inBytes, MSG_MAX_BYTES, MSG_WAITALL);
+	inMsg = new Message(inBytes);
 	delete[] inBytes;
 }
 
-void zs_worldserver::ZSCom::readNext() {
+void zs_worldserver::ZSCom::listenForNextInMsg() {
 	while (connection != INVALID_SOCKET) {
-		char* inBytes = new char[MSG_MAX_BYTES];
-
-		int n = 0;
-		while (n < MSG_MAX_BYTES) {
-			n += recv(connection, inBytes, MSG_MAX_BYTES, 0);
-		}
-
-		msgIn = new Message(inBytes);
-		delete[] inBytes;
+		readInMsg();
 		handleInMsg();
 	}
 }
 
 void zs_worldserver::ZSCom::handleInMsg() {
-	Head head = msgIn->getHead();
+	Head head = inMsg->getHead();
 	switch (head) {
 	case Head::CPC_ADDCLIENT_RES_TWO:
 	{
-		 msgIn->getZone();
+		 inMsg->getZone();
 		break;
 	}
         
 	default:
 		break;
 	}
-	delete msgIn;
+	delete inMsg;
 }

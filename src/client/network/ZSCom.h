@@ -13,17 +13,17 @@ namespace zs_worldserver {
         static ZSCom* singleton;
         static ZSCom* getInstance();
         void connectToZS(Zone zone);
-        void readNext();
+        void listenForNextInMsg();
     private:
         ZSCom();
         Game* game;
         SOCKET connection;
         sockaddr_in zsAddress;
         Message* toSend;
-        Message* msgIn;
+        Message* inMsg;
         void createSocket(Zone);
         void connectSocket();
-        void readReply();
+        void readInMsg();
         void handleInMsg();
     };
 }

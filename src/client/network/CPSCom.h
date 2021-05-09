@@ -15,17 +15,17 @@ namespace zs_worldserver {
         static CPSCom* getInstance();
         AddClientDTO addClient(std::string name);
         void connectToCPS(CPSAddress cpsAddress);
-        void readNext();
+        void listenForNextInMsg();
     private:
         CPSCom();
         Game* game;
         SOCKET connection;
         sockaddr_in cpsAddress;
         Message* toSend;
-        Message* msgIn;
+        Message* inMsg;
         void createSocket(CPSAddress);
         void connectSocket();
-        void readReply();
+        void readInMsg();
         void handleInMsg();
     };
 }
