@@ -47,24 +47,29 @@ zs_worldserver::AddClientDTO zs_worldserver::CPSCom::addClient(std::string name)
 	toSend = new Message(Head::CCP_ADDCLIENT_REQ, name);
 	send(connection, toSend->bytes, MSG_MAX_BYTES, 0);
 	delete toSend;
+
 	readInMsg();
 	Status status = inMsg->getStatus();
     delete inMsg;
-    readInMsg();
-    Zone zone = inMsg->getZone();
-    delete inMsg;
+	std::cout << "Got status: " << (char)status << std::endl;
+
+	readInMsg();
+	Zone zone = inMsg->getZone();
+	delete inMsg;
+	std::cout << "Got zone ip: " << zone.ip << std::endl;
+
     readInMsg();
     int id = inMsg->getPlayerId();
     delete inMsg;
+	std::cout << "Got player id: " << id << std::endl;
+
     AddClientDTO dto = { status , zone, id };
 	return dto;
 }
 
 void zs_worldserver::CPSCom::readInMsg() {
-	char* inBytes = new char[MSG_MAX_BYTES];
 	recv(connection, inBytes, MSG_MAX_BYTES, MSG_WAITALL);
 	inMsg = new Message(inBytes);
-	delete[] inBytes;
 }
 
 void zs_worldserver::CPSCom::listenForNextInMsg() {

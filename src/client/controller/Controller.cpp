@@ -19,6 +19,7 @@ zs_worldserver::Controller* zs_worldserver::Controller::getInstance() {
 zs_worldserver::Controller::Controller() {
 	game = game->getInstance();
 	cpsCom = cpsCom->getInstance();
+	zsCom = zsCom->getInstance();
 	std::thread gfx(&gfxThread);
 	gfx.detach();
 }
@@ -26,6 +27,7 @@ zs_worldserver::Controller::Controller() {
 void zs_worldserver::Controller::joinGame(CPSAddress cpsAddress, std::string name) {
 	cpsCom->connectToCPS(cpsAddress);
 	AddClientDTO dto = cpsCom->addClient(name);
+	std::cout << "got status: " << (char)dto.status << std::endl;
 	if (dto.status == Status::OK) {
 		std::cout << "Connected!\n";
                 std::cout << "Got zone: " << dto.zone.id << " ip: " << dto.zone.ip << "\n";

@@ -23,6 +23,7 @@ namespace zs_worldserver {
         sockaddr_in cpsAddress;
         Message* toSend;
         Message* inMsg;
+        char inBytes[MSG_MAX_BYTES];
         void createSocket(CPSAddress);
         void connectSocket();
         void readInMsg();
