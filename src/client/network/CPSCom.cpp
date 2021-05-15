@@ -44,6 +44,7 @@ void zs_worldserver::CPSCom::connectSocket() {
 }
 
 zs_worldserver::AddClientDTO zs_worldserver::CPSCom::addClient(std::string name) {
+	//TODO:Remove or find usage for name in cp-server and zs
 	toSend = new Message(Head::CCP_ADDCLIENT_REQ, name);
 	send(connection, toSend->bytes, MSG_MAX_BYTES, 0);
 	delete toSend;
