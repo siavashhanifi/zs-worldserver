@@ -27,7 +27,7 @@ namespace zs_worldserver {
         int connection;
         std::string cpsIp;
         int cpsPort;
-        char *inBytes;
+        char inBytes[MSG_MAX_BYTES];
         Message *toSend;
         Message *inMsg;
         void createSocket();

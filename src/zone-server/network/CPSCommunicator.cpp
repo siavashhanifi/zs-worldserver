@@ -11,7 +11,6 @@ zs_worldserver::CPSCommunicator* zs_worldserver::CPSCommunicator::getInstance(){
 
 zs_worldserver::CPSCommunicator::CPSCommunicator(){
     controller = controller->getInstance();
-    inBytes = new char[MSG_MAX_BYTES];
 }
 
 

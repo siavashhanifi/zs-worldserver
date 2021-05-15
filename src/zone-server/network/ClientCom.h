@@ -20,12 +20,13 @@ namespace zs_worldserver {
     private:
         ClientCom();
         Zone zone;
+        sockaddr_in zsAddress, cliaddr;
         int sockfd;
-        char buffer[UDP_MSG_MAX_BYTES];
-        char *inMsg;
-        char *outMsg;
-        sockaddr_in servaddr, cliaddr;
-        void parseInData();
-
+        char inAndOutBytes[UDP_MSG_MAX_BYTES];
+        void createSocket();
+        void bindSocket();
+        void readInMsg();
+        void handleInMsg();
+        void sendMsg();
     };
 }
