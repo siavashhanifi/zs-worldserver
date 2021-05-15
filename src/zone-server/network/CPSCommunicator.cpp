@@ -45,14 +45,12 @@ zs_worldserver::Status zs_worldserver::CPSCommunicator::addToCPS(Zone zone){
     toSend = new Message(Head::ZCP_ADDZONE_REQ, zone);
     sendMessage();
     delete toSend;
-    std::cout << "sent ZCP_ADDZONE_REQ\n";   
     
     recv(connection, inBytes, MSG_MAX_BYTES, MSG_WAITALL);
-    std::cout << "Recieved response\n";    
-
     inMsg = new Message(inBytes);
     Status status = inMsg->getStatus();
     delete inMsg;
+    
     return status;
 }
 
@@ -67,20 +65,16 @@ void zs_worldserver::CPSCommunicator::readNext(){
 }
 
 void zs_worldserver::CPSCommunicator::handleMessage(){
-    std::cout << "handling message\n";
     Head head = inMsg->getHead();
     switch(head){
         case Head::CPZ_ADDCLIENT_REQ:
         {
-            std::cout << "got head: CPZ_ADDCLIENT_REQ\n";
             PlayerState ps = inMsg->getPlayerState();
-            std::cout << "ps id: " << ps.id << "\n";
             Status status = controller->addClient(ps);
             
             toSend = new Message(Head::ZCP_ADDCLIENT_RES, status);
             sendMessage();
             delete toSend;
-            std::cout << "sent reply\n";
             break;
         }
         default:

@@ -16,7 +16,6 @@ void zs_worldserver::Zones::addZone(Zone zone, int socket){
     const std::lock_guard<std::mutex> lockGuard(lock);
     idZone[zone.id] = zone;
     idSocket[zone.id] = socket;
-    std::cout<< "zone.id: " << zone.id << " Zone ip: " << idZone[zone.id].ip << std::endl;
 }
 
 zs_worldserver::Zone zs_worldserver::Zones::getStartZone(){

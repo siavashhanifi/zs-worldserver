@@ -32,7 +32,6 @@ void zs_worldserver::TCPListener::socketListen(){
     while(true){
         int connection = accept(listenerSocket, (sockaddr*)&clientAddress, 
                 &clilen);
-        std::cout << "New connection: " << connection << std::endl;
         if(connection >= 0){
             std::thread newThread(&connectionThread, &connection);
             newThread.detach();
