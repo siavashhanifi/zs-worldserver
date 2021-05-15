@@ -16,8 +16,6 @@ zs_worldserver::ZSCom::ZSCom() {
 
 	connection = INVALID_SOCKET;
 	zsAddress = { 0 };
-	inMsg = nullptr;
-	toSend = nullptr;
 	game = game->getInstance();
 }
 
@@ -44,10 +42,8 @@ void zs_worldserver::ZSCom::connectSocket() {
 }
 
 void zs_worldserver::ZSCom::readInMsg() {
-	char* inBytes = new char[MSG_MAX_BYTES];
-	recv(connection, inBytes, MSG_MAX_BYTES, MSG_WAITALL);
-	inMsg = new Message(inBytes);
-	delete[] inBytes;
+	size_t zsAddrSize = sizeof(zsAddress);
+	recvfrom(connection, inAndOutBytes, UDP_MSG_MAX_BYTES, MSG_WAITALL, (sockaddr*)&zsAddress, (int*)&zsAddrSize);
 }
 
 void zs_worldserver::ZSCom::listenForNextInMsg() {
@@ -58,16 +54,11 @@ void zs_worldserver::ZSCom::listenForNextInMsg() {
 }
 
 void zs_worldserver::ZSCom::handleInMsg() {
-	Head head = inMsg->getHead();
-	switch (head) {
-	case Head::CPC_ADDCLIENT_RES_TWO:
-	{
-		 inMsg->getZone();
-		break;
+	switch (inAndOutBytes[0]) {
+	case ' ': {
+
 	}
-        
 	default:
 		break;
 	}
-	delete inMsg;
 }

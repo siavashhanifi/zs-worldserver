@@ -3,7 +3,8 @@
 #include <string>
 #include <WinSock2.h>
 #include <WS2tcpip.h>
-#include "marshalling/TCP/Message.h"
+#include "marshalling/UDP/UDPMessageHelper.h"
+#include "marshalling/TCP/"
 #include "data/Zone.h"
 #include "../model/Game.h"
 
@@ -19,8 +20,7 @@ namespace zs_worldserver {
         Game* game;
         SOCKET connection;
         sockaddr_in zsAddress;
-        Message* toSend;
-        Message* inMsg;
+        char inAndOutBytes[UDP_MSG_MAX_BYTES];
         void createSocket(Zone);
         void connectSocket();
         void readInMsg();
