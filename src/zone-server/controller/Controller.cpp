@@ -43,12 +43,14 @@ void zs_worldserver::Controller::init(Zone zone, std::string ip, int port) {
     if (status == Status::OK) {
         std::thread cpsThread(cpsComThread, cpsCom);
         cpsThread.detach();
+        std::cout<<"Successfully connected to client placement server.\n";
         while(true);
     }
 }
 
 zs_worldserver::Status zs_worldserver::Controller::addClient(PlayerState ps) {
     game->addPlayer(ps);
+    std::cout<<"Added player: " << ps.id << std::endl;
     Status status = Status::OK;
     return status;
 }
