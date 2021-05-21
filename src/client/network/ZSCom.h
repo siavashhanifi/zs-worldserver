@@ -4,7 +4,7 @@
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #include "marshalling/UDP/UDPMessageHelper.h"
-#include "marshalling/TCP/"
+#include "marshalling/TCP/Message.h"
 #include "data/Zone.h"
 #include "../model/Game.h"
 
