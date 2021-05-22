@@ -13,8 +13,9 @@ namespace zs_worldserver {
     public:
         static ZSCom* singleton;
         static ZSCom* getInstance();
-        void connectToZS(Zone zone);
+        void init(Zone zone);
         void listenForNextInMsg();
+        void sendInitReq();
     private:
         ZSCom();
         Game* game;
@@ -22,8 +23,8 @@ namespace zs_worldserver {
         sockaddr_in zsAddress;
         char inAndOutBytes[UDP_MSG_MAX_BYTES];
         void createSocket(Zone);
-        void connectSocket();
         void readInMsg();
         void handleInMsg();
+        void sendMsg();
     };
 }

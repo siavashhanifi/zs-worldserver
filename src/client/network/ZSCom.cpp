@@ -19,31 +19,24 @@ zs_worldserver::ZSCom::ZSCom() {
 	game = game->getInstance();
 }
 
-void zs_worldserver::ZSCom::connectToZS(Zone zone) {
-	createSocket(zone);
-	connectSocket();
-}
-
-void zs_worldserver::ZSCom::createSocket(Zone zone) {
+void zs_worldserver::ZSCom::init(Zone zone) {
 	this->zsAddress.sin_family = AF_INET;
 	this->zsAddress.sin_addr.s_addr = inet_addr(zone.ip.c_str());
 	this->zsAddress.sin_port = htons(zone.udpPort);
-	connection = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	createSocket(zone);
 }
 
-void zs_worldserver::ZSCom::connectSocket() {
-	int rc;
-	rc = connect(connection, (SOCKADDR*)&zsAddress, sizeof(zsAddress));
-	if (rc == SOCKET_ERROR) {
-		closesocket(connection);
-		connection = INVALID_SOCKET;
-		std::cerr << "Failed to connect: " << WSAGetLastError() << std::endl;
-	}
+void zs_worldserver::ZSCom::createSocket(Zone zone) {
+	connection = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 }
 
 void zs_worldserver::ZSCom::readInMsg() {
 	size_t zsAddrSize = sizeof(zsAddress);
-	recvfrom(connection, inAndOutBytes, UDP_MSG_MAX_BYTES, MSG_WAITALL, (sockaddr*)&zsAddress, (int*)&zsAddrSize);
+	int rc = recvfrom(connection, inAndOutBytes, 
+						UDP_MSG_MAX_BYTES,
+						0, 
+						(sockaddr*)&zsAddress,
+						(socklen_t*)&zsAddrSize);
 }
 
 void zs_worldserver::ZSCom::listenForNextInMsg() {
@@ -55,10 +48,26 @@ void zs_worldserver::ZSCom::listenForNextInMsg() {
 
 void zs_worldserver::ZSCom::handleInMsg() {
 	switch (inAndOutBytes[0]) {
-	case ' ': {
-
+		case (char)Action::MOVE_UP: {
+			std::cout << "got move up";
+			game->playerState.pos.y += 0.01f;
+			break;
+		}
+		default: {
+			break;
+		}
 	}
-	default:
-		break;
+}
+
+void zs_worldserver::ZSCom::sendMsg() {
+	sendto(connection, inAndOutBytes, UDP_MSG_MAX_BYTES, 0, (sockaddr*)&zsAddress, sizeof(zsAddress));
+}
+
+void zs_worldserver::ZSCom::sendInitReq() {
+	for (int i = 0; i < 10; i++) {
+		inAndOutBytes[0] = (char)Action::INIT_ACTION;
+		sendMsg();
+		readInMsg();
+		handleInMsg();
 	}
 }

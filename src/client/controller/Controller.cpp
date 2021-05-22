@@ -9,6 +9,10 @@ void cpsComThread(zs_worldserver::CPSCom *cpsCom) {
 	cpsCom->listenForNextInMsg();
 }
 
+void zsComThread(zs_worldserver::ZSCom* zsCom) {
+	zsCom->listenForNextInMsg();
+}
+
 zs_worldserver::Controller* zs_worldserver::Controller::singleton = NULL;
 zs_worldserver::Controller* zs_worldserver::Controller::getInstance() {
 	if (singleton == NULL)
@@ -31,10 +35,17 @@ void zs_worldserver::Controller::joinGame(CPSAddress cpsAddress, std::string nam
 		std::cout << "Connected!\n";
         std::cout << "Got zone: " << dto.zone.id << " ip: " << dto.zone.ip << "\n";
         std::cout << "port: " << dto.zone.udpPort;
-        zsCom->connectToZS(dto.zone);
-        game->setPlayerId(dto.playerId);
+
+		game->setPlayerId(dto.playerId);
+
+        zsCom->init(dto.zone);
+		zsCom->sendInitReq();
+
+		/*std::thread zsComThread(&zsComThread, zsCom);
+		zsComThread.detach();*/
+
 		std::thread cpsComThread(&cpsComThread, cpsCom);
-		cpsComThread.join();
+		cpsComThread.detach();
 	}
 	else
 		std::cout << "Failed to connect to CPS";
