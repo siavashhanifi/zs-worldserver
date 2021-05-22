@@ -15,7 +15,7 @@ zs_worldserver::Controller::Controller() {
 
 void zs_worldserver::Controller::addZone(Zone zone, int socket) {
     zones->addZone(zone, socket);
-    std::cout<<"Added zone with id: " << zone.id << " ip: " << zone.ip <<
+    std::cout << "Added zone with id: " << zone.id << " ip: " << zone.ip <<
             " port: " << std::to_string(zone.udpPort) << std::endl;
 }
 
@@ -27,11 +27,18 @@ zs_worldserver::AddClientDTO zs_worldserver::Controller::addClient(std::string n
     Position startPosition = {startZone.border.xMax / 2, startZone.border.yMin / 2};
     PlayerState ps = {clientId, startPosition};
 
-    //Tell string zone server to add client
+    //Tell zone server to add client
     int zoneSocket = zones->getSocket(startZone.id);
-    Status status = ZoneComUtil::addClientReq(ps, zoneSocket);
+    ZoneComUtil::addClientReq(ps, zoneSocket);
 
     //Set reply details
-    AddClientDTO dto = {status, startZone, clientId};
+    AddClientDTO dto = {Status::OK, startZone, clientId};
+    
+    //Wait for response from zs.
+    while (!session->isClientAddedToZS(clientId));
     return dto;
+}
+
+void zs_worldserver::Controller::registerClientAdded(int clientId, int zsSocket){
+    session->registerClientAddedToZS(clientId, zsSocket);
 }

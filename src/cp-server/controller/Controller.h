@@ -14,6 +14,7 @@ namespace zs_worldserver {
         static Controller* getInstance();
         void addZone(Zone zone, int socket);
         AddClientDTO addClient(std::string name);
+        void registerClientAdded(int clientId, int zsId);
     private:
         Controller();
         Zones *zones;

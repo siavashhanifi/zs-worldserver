@@ -28,7 +28,7 @@ zs_worldserver::Message::Message(char* bytes){
         }
         case Head::ZCP_ADDCLIENT_RES:
         {
-            dserializeStatus();
+            dserializePlayerId();
             break;
         }
          case Head::CPC_ADDCLIENT_RES_ONE:

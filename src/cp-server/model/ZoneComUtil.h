@@ -8,7 +8,7 @@
 namespace zs_worldserver {
     class ZoneComUtil{
     public:
-        static Status addClientReq(PlayerState, int zoneSocket);
+        static void addClientReq(PlayerState, int zoneSocket);
     private:
         ZoneComUtil(){};
     };

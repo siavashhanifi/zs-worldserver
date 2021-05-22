@@ -26,7 +26,6 @@ void zs_worldserver::ConnectionHandler::handleMessage() {
         case Head::ZCP_ADDZONE_REQ:
         {
             Zone zone = inMsg->getZone();
-            std::cout << zone.id << std::endl;
             controller->addZone(zone, connection);
             reply = new Message(Head::CPZ_ADDZONE_RES, Status::OK);
             sendReply();
@@ -53,6 +52,11 @@ void zs_worldserver::ConnectionHandler::handleMessage() {
             delete reply;
 
             break;
+        }
+        case Head::ZCP_ADDCLIENT_RES:
+        {
+            int clientId = inMsg->getPlayerId();
+            controller->registerClientAdded(clientId, connection);
         }
         default:
             break;
