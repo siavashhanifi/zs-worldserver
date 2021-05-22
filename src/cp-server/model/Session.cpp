@@ -19,9 +19,9 @@ int zs_worldserver::Session::generateId() {
     return old;
 }
 
-void zs_worldserver::Session::registerClientAddedToZS(int clientId, int zsId) {
+void zs_worldserver::Session::registerClientAddedToZS(int clientId, int zsSock) {
     const std::lock_guard<std::mutex> lockGuard(lock);
-    clientInZone[clientId] = zsId;
+    clientInZone[clientId] = zsSock;
 }
 
 bool zs_worldserver::Session::isClientAddedToZS(int clientId) {

@@ -10,12 +10,11 @@ namespace zs_worldserver {
         static Session *getInstance();
         int generateId();
         bool isClientAddedToZS(int clientId);
-        void registerClientAddedToZS(int clientId, int zsId);
+        void registerClientAddedToZS(int clientId, int zsSocket);
     private:
         Session();
         int idCounter;
-        std::unordered_map<int, int> clientInZone; //key:clientId val: in zone-server 
+        std::unordered_map<int, int> clientInZone; //key:clientId val: in zsSocket
         std::mutex lock;
-        //std::unordered_map<int, int> clientSocket;//key:clientid <-> val:clientSocket
     };
 }
